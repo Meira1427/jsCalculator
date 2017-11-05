@@ -1,5 +1,5 @@
 var current = {
-    lastOp : 'a',
+    lastOp : '',
     digits: '',
     operands : []
 }
@@ -12,17 +12,21 @@ $('.operator').click(function(){
         current.operands = [];
     }
     else if (oper == '='){
-        current.operands.push(parseInt(current.digits));
+        current.operands.push(parseFloat(current.digits));
         //console.log("operands: " + current.operands);
         var answer = processArray(current.operands);
         $('#display').text(answer);
         current.digits = '';
-        current.digits += answer
+        current.digits += answer;
         current.operands = [];
+    }
+    else if (oper=='.') {
+        current.digits+='.';
+        $('#display').text(current.digits);
     }
     else {
         current.lastOp = oper;
-        current.operands.push(parseInt( current.digits ));
+        current.operands.push(parseFloat( current.digits ));
         current.operands.push(current.lastOp);
         current.digits = '';
         }
@@ -40,13 +44,13 @@ var processArray = function(arr) {
     for(var i = 0; i < arr.length; i++) {
         if(i%2 == 0) {
             if(operation==undefined || operation=='+') {
-                total += parseInt(arr[i]);
+                total += parseFloat(arr[i]);
             }
             else if(operation=='-') {
-                total -= parseInt(arr[i]);
+                total -= parseFloat(arr[i]);
             }
             else if(operation=='X') {
-                total *= parseInt(arr[i]);
+                total *= parseFloat(arr[i]);
             }
             else if(operation=='/') {
                 total = total/arr[i];
